@@ -12,7 +12,7 @@ const (
 	Collection string = "info"
 )
 
-func Cria(info model.Info) error {
+func Cria(info model.Info) {
 	session, err := mgo.Dial(URL)
 
 	if err != nil {
@@ -30,6 +30,4 @@ func Cria(info model.Info) error {
 	if err != nil {
 		panic(err)
 	}
-
-	return err
 }

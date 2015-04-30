@@ -26,11 +26,7 @@ func Cria(w http.ResponseWriter, req *http.Request, _ router.Params) {
 		panic(err)
 	}
 
-	err = dao.Cria(info)
-
-	if err != nil {
-		panic(err)
-	}
+	go dao.Cria(info)
 
 	w.WriteHeader(http.StatusCreated)
 }
