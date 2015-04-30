@@ -32,5 +32,5 @@ func Cria(w http.ResponseWriter, req *http.Request, _ router.Params) {
 		panic(err)
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusCreated)
 }
