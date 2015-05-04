@@ -1,7 +1,7 @@
 package dao
 
 import (
-	model "github.com/ericmdantas/simple_go/model"
+	_ "github.com/ericmdantas/simple_go/model"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -12,22 +12,16 @@ const (
 	Collection string = "info"
 )
 
-func Cria(info model.Info) {
+func Cria(info map[string]interface{}) {
 	session, err := mgo.Dial(URL)
-
-	if err != nil {
-		panic(err)
-	}
-
 	defer session.Close()
 
-	info.Id = bson.NewObjectId()
-
-	coll := session.DB(DB).C(Collection)
-
-	err = coll.Insert(info)
+	session.SetSafe(nil) // fire & forget
 
 	if err != nil {
 		panic(err)
 	}
+
+	info["_id"] = bson.NewObjectId()
+	session.DB(DB).C(Collection).Insert(info)
 }
