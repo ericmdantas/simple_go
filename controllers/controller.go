@@ -11,21 +11,24 @@ import (
 
 func Cria(w http.ResponseWriter, req *http.Request, _ router.Params) {
 	inf, err := ioutil.ReadAll(req.Body)
-	defer req.Body.Close()
 
 	var m map[string]interface{}
 
 	if err != nil {
+		req.Body.Close()
 		panic(err)
 	}
 
 	err = json.Unmarshal(inf, &m)
 
 	if err != nil {
+		req.Body.Close()
 		panic(err)
 	}
 
 	dao.Cria(m)
+
+	req.Body.Close()
 
 	w.WriteHeader(http.StatusCreated)
 }

@@ -14,14 +14,15 @@ const (
 
 func Cria(info map[string]interface{}) {
 	session, err := mgo.Dial(URL)
-	defer session.Close()
 
 	session.SetSafe(nil) // fire & forget
 
 	if err != nil {
+		session.Close()
 		panic(err)
 	}
 
 	info["_id"] = bson.NewObjectId()
 	session.DB(DB).C(Collection).Insert(info)
+	session.Close()
 }
