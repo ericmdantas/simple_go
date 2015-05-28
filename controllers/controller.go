@@ -3,9 +3,9 @@ package controller
 import (
 	"encoding/json"
 	dao "github.com/ericmdantas/simple_go/dao"
-	_ "github.com/ericmdantas/simple_go/model"
 	router "github.com/julienschmidt/httprouter"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -16,14 +16,16 @@ func Cria(w http.ResponseWriter, req *http.Request, _ router.Params) {
 
 	if err != nil {
 		req.Body.Close()
-		panic(err)
+		log.Println(err)
+		return
 	}
 
 	err = json.Unmarshal(inf, &m)
 
 	if err != nil {
 		req.Body.Close()
-		panic(err)
+		log.Println(err)
+		return
 	}
 
 	dao.Cria(m)

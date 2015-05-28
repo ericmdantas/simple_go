@@ -1,9 +1,9 @@
 package dao
 
 import (
-	_ "github.com/ericmdantas/simple_go/model"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"log"
 )
 
 const (
@@ -19,7 +19,8 @@ func Cria(info map[string]interface{}) {
 
 	if err != nil {
 		session.Close()
-		panic(err)
+		log.Println(err)
+		return
 	}
 
 	info["_id"] = bson.NewObjectId()
